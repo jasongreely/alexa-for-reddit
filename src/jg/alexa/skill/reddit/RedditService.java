@@ -2,12 +2,10 @@ package jg.alexa.skill.reddit;
 
 import jg.alexa.config.AppConfig;
 import jg.alexa.config.ProjectProperties;
-import kotlin.sequences.Sequence;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
 import net.dean.jraw.http.UserAgent;
-import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
@@ -20,7 +18,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by jgreely on 3/16/18.
