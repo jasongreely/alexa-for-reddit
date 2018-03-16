@@ -1,3 +1,6 @@
 # IntelliJ
 .idea/
 *.iml
+
+# Credentials
+src/jg/alexa/resources/project.properties
