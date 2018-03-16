@@ -2,13 +2,25 @@ package jg.alexa.skill.test;
 
 import jg.alexa.config.AppConfig;
 import jg.alexa.config.ProjectProperties;
+import net.dean.jraw.RedditClient;
+import net.dean.jraw.http.NetworkAdapter;
+import net.dean.jraw.http.OkHttpNetworkAdapter;
+import net.dean.jraw.http.UserAgent;
+import net.dean.jraw.models.*;
+import net.dean.jraw.oauth.Credentials;
+import net.dean.jraw.oauth.OAuthHelper;
+import net.dean.jraw.pagination.DefaultPaginator;
+import net.dean.jraw.references.SubredditReference;
+import net.dean.jraw.tree.CommentNode;
+import net.dean.jraw.tree.RootCommentNode;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,8 +34,64 @@ class RedditServiceTest {
 
     Logger log = LoggerFactory.getLogger(RedditServiceTest.class);
 
+    private final int PAGE_LIMIT = properties.getRedditPageLimit();
+
+    private final RedditClient reddit = auth();
+
     @Test
     public void testAuth(){
-        System.out.println(properties.getRedditUsername());
+        SubredditReference nfl = reddit.subreddit("nfl");
+        Subreddit aboutNfl = nfl.about();
+
+        assertNotNull(aboutNfl);
     }
+
+    @Test
+    public void getFrontPage(){
+        DefaultPaginator<Submission> paginator = reddit.frontPage()
+                .limit(PAGE_LIMIT)
+                .sorting(SubredditSort.TOP)
+                .build();
+
+        assertNotNull(paginator.next());
+    }
+
+    @Test
+    public void getSubredditPage(){
+        String subreddit = "nfl";
+
+        DefaultPaginator<Submission> paginator = reddit.subreddit(subreddit)
+                .posts()
+                .limit(PAGE_LIMIT)
+                .sorting(SubredditSort.HOT)
+                .build();
+
+        assertNotNull(paginator);
+    }
+
+    @Test
+    public void getComments(){
+        String commentId = "foo";
+
+        RootCommentNode rootNode = reddit.submission(commentId).comments();
+
+        Iterator<CommentNode<PublicContribution<?>>> comments = rootNode.walkTree().iterator();
+
+        assertNotNull(comments);
+    }
+
+    public RedditClient auth(){
+        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "0.0.1", "Crum_Bum");
+
+        Credentials credentials = Credentials.script(properties.getRedditUsername(), properties.getRedditPassword(),
+                properties.getRedditClientId(), properties.getRedditClientSecret());
+
+        NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
+
+        RedditClient reddit = OAuthHelper.automatic(adapter, credentials);
+
+        return reddit;
+    }
+
+
 }
