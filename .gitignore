@@ -3,4 +3,4 @@
 *.iml
 
 # Credentials
-src/jg/alexa/resources/project.properties
+src/project.properties
