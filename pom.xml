@@ -8,7 +8,7 @@
     <artifactId>alexaforreddit</artifactId>
     <version>0.0.1</version>
     <properties>
-        <jraw.version>1.0.0</jraw.version>
+        <jraw.version>1.1.0</jraw.version>
         <property name="disableRequestSignatureCheck" value="false"/>
         <property name="supportedApplicationIds" value=""/>
         <property name="timestampTolerance" value="150"/>
@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.dean.jraw</groupId>
+            <groupId>com.github.mattbdean</groupId>
             <artifactId>JRAW</artifactId>
-            <version>${jraw.version}</version>
+            <version>7077924</version>
         </dependency>
         <dependency>
             <groupId>com.amazon.alexa</groupId>
@@ -88,6 +88,10 @@
         <repository>
             <id>bintray</id>
             <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 

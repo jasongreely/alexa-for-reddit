@@ -14,16 +14,18 @@ import org.springframework.core.env.Environment;
 public class AppConfig {
 
     @Autowired
-    Environment environment;
+    Environment env;
 
     @Bean
     ProjectProperties projectProperties(){
         ProjectProperties bean = new ProjectProperties();
 
-        bean.setRedditUsername(environment.getProperty("reddit.username"));
-        bean.setRedditPassword(environment.getProperty("reddit.password"));
-        bean.setRedditClientId(environment.getProperty("reddit.client_id"));
-        bean.setRedditClientSecret(environment.getProperty("reddit.client_secret"));
+        bean.setRedditUsername(env.getProperty("reddit.username"));
+        bean.setRedditPassword(env.getProperty("reddit.password"));
+        bean.setRedditClientId(env.getProperty("reddit.client_id"));
+        bean.setRedditClientSecret(env.getProperty("reddit.client_secret"));
+
+        bean.setRedditPageLimit(Integer.valueOf(env.getProperty("reddit.page.limit")));
 
         return bean;
     }

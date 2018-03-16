@@ -11,6 +11,8 @@ public class ProjectProperties {
     private String redditClientId;
     private String redditClientSecret;
 
+    private int redditPageLimit;
+
     public String getRedditUsername() {
         return redditUsername;
     }
@@ -41,5 +43,13 @@ public class ProjectProperties {
 
     public void setRedditClientSecret(String redditClientSecret) {
         this.redditClientSecret = redditClientSecret;
+    }
+
+    public int getRedditPageLimit() {
+        return redditPageLimit;
+    }
+
+    public void setRedditPageLimit(int redditPageLimit) {
+        this.redditPageLimit = redditPageLimit;
     }
 }
