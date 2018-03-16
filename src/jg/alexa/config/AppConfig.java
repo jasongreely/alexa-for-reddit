@@ -27,6 +27,8 @@ public class AppConfig {
 
         bean.setRedditPageLimit(Integer.valueOf(env.getProperty("reddit.page.limit")));
 
+        bean.setAlexaHelpRepeat(env.getProperty("alexa.help.repeat"));
+
         return bean;
     }
 }

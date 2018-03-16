@@ -1,16 +1,14 @@
 {
   "intents": [
     {
-      "intent": "GetFirstEventIntent",
-      "slots": [
-        {
-          "name": "day",
-          "type": "AMAZON.DATE"
-        }
-      ]
+      "intent": "GetFrontPageIntent"
     },
     {
-      "intent": "GetNextEventIntent"
+      "intent": "GetSubredditPageIntent",
+      "slots":[{
+        "name":"subreddit",
+        "type":"String"
+      }]
     },
     {
       "intent": "AMAZON.HelpIntent"

@@ -1,13 +1,11 @@
-GetFirstEventIntent get events for {day}
-GetFirstEventIntent give me events for {day}
-GetFirstEventIntent what happened on {day}
-GetFirstEventIntent what happened
-GetFirstEventIntent {day}
+GetFrontPageIntent get me the front page
+GetFrontPageIntent give me the front page
+GetFrontPageIntent front page
 
-GetNextEventIntent yes
-GetNextEventIntent yup
-GetNextEventIntent sure
-GetNextEventIntent yes please
+GetSubredditPageIntent get me {subreddit}
+GetSubredditPageIntent get me the posts on {subreddit}
+GetSubredditPageIntent give me {subreddit}
+GetSubredditPageIntent give me the posts on {subreddit}
 
 AMAZON.StopIntent no
 AMAZON.StopIntent nope

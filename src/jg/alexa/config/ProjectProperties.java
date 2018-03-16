@@ -13,6 +13,8 @@ public class ProjectProperties {
 
     private int redditPageLimit;
 
+    private String alexaHelpRepeat;
+
     public String getRedditUsername() {
         return redditUsername;
     }
@@ -52,4 +54,8 @@ public class ProjectProperties {
     public void setRedditPageLimit(int redditPageLimit) {
         this.redditPageLimit = redditPageLimit;
     }
+
+    public String getAlexaHelpRepeat(){ return alexaHelpRepeat; }
+
+    public void setAlexaHelpRepeat(String alexaHelpRepeat){ this.alexaHelpRepeat = alexaHelpRepeat; }
 }
