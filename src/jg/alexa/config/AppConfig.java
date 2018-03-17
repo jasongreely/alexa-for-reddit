@@ -20,14 +20,22 @@ public class AppConfig {
     ProjectProperties projectProperties(){
         ProjectProperties bean = new ProjectProperties();
 
+        //Reddit Credentials
         bean.setRedditUsername(env.getProperty("reddit.username"));
         bean.setRedditPassword(env.getProperty("reddit.password"));
         bean.setRedditClientId(env.getProperty("reddit.client_id"));
         bean.setRedditClientSecret(env.getProperty("reddit.client_secret"));
 
+        //RedditService Settings
         bean.setRedditPageLimit(Integer.valueOf(env.getProperty("reddit.page.limit")));
+        bean.setRedditPageCeiling(Integer.valueOf(env.getProperty("reddit.page.ceiling")));
 
+        //Alexa Speechlet Messages
         bean.setAlexaHelpRepeat(env.getProperty("alexa.help.repeat"));
+        bean.setAlexaMisunderstand(env.getProperty("alexa.misunderstand"));
+        bean.setAlexaWelcome(env.getProperty("alexa.welcome"));
+        bean.setAlexaExplainIntents(env.getProperty("alexa.explain.intents"));
+        bean.setAlexaConnectionError(env.getProperty("alexa.connection.error"));
 
         return bean;
     }
