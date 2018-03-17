@@ -2,11 +2,6 @@ GetFrontPageIntent get me the front page
 GetFrontPageIntent give me the front page
 GetFrontPageIntent front page
 
-GetSubredditPageIntent get me {subreddit}
-GetSubredditPageIntent get me the posts on {subreddit}
-GetSubredditPageIntent give me {subreddit}
-GetSubredditPageIntent give me the posts on {subreddit}
-
 AMAZON.StopIntent no
 AMAZON.StopIntent nope
 AMAZON.StopIntent no thanks

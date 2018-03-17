@@ -19,32 +19,14 @@
         ]
       },
       {
-        "name": "GetFirstEventIntent",
+        "name": "GetFrontPageIntent",
         "samples": [
-          "get events for {day}",
-          "give me events for {day}",
-          "what happened on {day}",
-          "what happened",
-          "{day}"
-        ],
-        "slots": [
-          {
-            "name": "day",
-            "type": "AMAZON.DATE"
-          }
+          "get me the front page",
+          "give me the front page",
+          "front page"
         ]
-      },
-      {
-        "name": "GetNextEventIntent",
-        "samples": [
-          "yes",
-          "yup",
-          "sure",
-          "yes please"
-        ],
-        "slots": []
       }
     ],
-    "invocationName": "history buff"
+    "invocationName": "reddit"
   }
 }

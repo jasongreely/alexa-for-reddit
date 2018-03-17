@@ -79,9 +79,6 @@ public class RedditSpeechlet implements SpeechletV2 {
         if (StringUtils.equalsIgnoreCase(FRONT_PAGE_INTENT, intentName)) {
             //return SpeechletResponse for front page posts
             return handleFrontPageRequest(requestEnvelope);
-        } else if (StringUtils.equalsIgnoreCase(SUBREDDIT_PAGE_INTENT, intentName)) {
-            //return SpeechletResponse for subreddit pages
-            return null;
         } else if (StringUtils.equalsIgnoreCase(HELP_INTENT, intentName)) {
             // Create the plain text output.
             String speechOutput =

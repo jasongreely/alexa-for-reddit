@@ -4,13 +4,6 @@
       "intent": "GetFrontPageIntent"
     },
     {
-      "intent": "GetSubredditPageIntent",
-      "slots":[{
-        "name":"subreddit",
-        "type":"String"
-      }]
-    },
-    {
       "intent": "AMAZON.HelpIntent"
     },
     {
