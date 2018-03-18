@@ -4,3 +4,6 @@
 
 # Credentials
 src/project.properties
+
+# build
+target/
