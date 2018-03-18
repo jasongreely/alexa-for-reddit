@@ -16,6 +16,9 @@ public class ProjectProperties {
     private int redditPageLimit;
     private int redditPageCeiling;
 
+    //Alexa Skill Configuration
+    private String alexaSkillId;
+
     //Alexa Speechlet Messages
     private String alexaHelpRepeat;
     private String alexaMisunderstand;
