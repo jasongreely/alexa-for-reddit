@@ -51,6 +51,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         redditService = new RedditService();
     }
 
+    @Override
     public void onSessionStarted(SpeechletRequestEnvelope<SessionStartedRequest> requestEnvelope) {
         SessionStartedRequest request = requestEnvelope.getRequest();
         Session session = requestEnvelope.getSession();
@@ -60,6 +61,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         // any initialization logic goes here
     }
 
+    @Override
     public SpeechletResponse onLaunch(SpeechletRequestEnvelope<LaunchRequest> requestEnvelope) {
         LaunchRequest request = requestEnvelope.getRequest();
         Session session = requestEnvelope.getSession();
@@ -70,6 +72,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         return getWelcomeResponse();
     }
 
+    @Override
     public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
         log.info("onIntent requestId={}, sessionId={}", requestEnvelope.getRequest().getRequestId(),
                 requestEnvelope.getSession().getSessionId());
@@ -101,7 +104,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         }
     }
 
-
+    @Override
     public void onSessionEnded(SpeechletRequestEnvelope<SessionEndedRequest> requestEnvelope) {
         SessionEndedRequest request = requestEnvelope.getRequest();
         Session session = requestEnvelope.getSession();
@@ -143,7 +146,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         }
 
         SsmlOutputSpeech outputSpeech = new SsmlOutputSpeech();
-        outputSpeech.setSsml("<speech>" + speechBuilder.toString() + "</speech>");
+        outputSpeech.setSsml("<speak>" + speechBuilder.toString() + "</speak>");
 
         return SpeechletResponse.newTellResponse(outputSpeech);
     }
