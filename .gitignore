@@ -3,7 +3,7 @@
 *.iml
 
 # Credentials
-src/project.properties
+src/jg/alexa/resources/project.properties
 
 # build
 target/
