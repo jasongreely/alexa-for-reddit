@@ -134,10 +134,9 @@ public class RedditSpeechlet implements SpeechletV2 {
             for(int x = 0; x < properties.getRedditPageCeiling(); x++){
                 Listing<Submission> submissions = frontPaginator.next();
                 for(Submission submission : submissions){
-                    String post = submission.getTitle() + ", " + submission.getScore() + " points.";
-
                     speechBuilder.append("<p>");
-                    speechBuilder.append(post);
+                    speechBuilder.append("From " + submission.getSubredditFullName() + ", ");
+                    speechBuilder.append(submission.getTitle() + ", " + submission.getScore() + " points.");
                     speechBuilder.append("</p>");
                 }
             }
