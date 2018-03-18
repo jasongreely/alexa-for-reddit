@@ -7,3 +7,4 @@ src/project.properties
 
 # build
 target/
+lib/
