@@ -6,7 +6,7 @@
 
     <groupId>jg.alexa</groupId>
     <artifactId>alexaforreddit</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <properties>
         <jraw.version>1.1.0</jraw.version>
         <property name="disableRequestSignatureCheck" value="false"/>

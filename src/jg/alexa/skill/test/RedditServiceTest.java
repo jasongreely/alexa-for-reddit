@@ -21,6 +21,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,16 +82,12 @@ class RedditServiceTest {
     }
 
     public RedditClient auth(){
-        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "0.0.1", "Crum_Bum");
-
-        Credentials credentials = Credentials.script(properties.getRedditUsername(), properties.getRedditPassword(),
-                properties.getRedditClientId(), properties.getRedditClientSecret());
+        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "1.1.0", "AlexaForReddit");
 
         NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
+        UUID uuid = UUID.randomUUID();
 
-        RedditClient reddit = OAuthHelper.automatic(adapter, credentials);
-
-        return reddit;
+        return OAuthHelper.automatic(adapter, Credentials.userless(properties.getRedditClientId(), properties.getRedditClientSecret(), uuid));
     }
 
 

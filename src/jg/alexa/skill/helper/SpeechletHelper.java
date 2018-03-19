@@ -107,21 +107,25 @@ public class SpeechletHelper {
         }
     }
 
-    public String getSubmissionSpeech(DefaultPaginator<Submission> paginator, int pageCeiling){
+    public String getSubmissionSpeech(DefaultPaginator<Submission> paginator, int pageCeiling, boolean speakSubreddit){
         StringBuilder builder = new StringBuilder();
 
         for(int x = 0; x < pageCeiling; x++){
             Listing<Submission> submissions = paginator.next();
+
             for(Submission submission : submissions){
                 int roundedScore = getRoundedScore(submission.getScore());
 
                 builder.append("<p>");
-                builder.append("From " + submission.getSubreddit() + ", ");
+
+                if(speakSubreddit) {
+                    builder.append("From " + submission.getSubreddit() + ", ");
+                }
+
                 builder.append(submission.getTitle() + ", " + roundedScore + " points.");
                 builder.append("</p>");
             }
         }
-
         return builder.toString();
     }
 

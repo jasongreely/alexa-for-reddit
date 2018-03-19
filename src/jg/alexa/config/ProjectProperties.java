@@ -6,6 +6,8 @@ package jg.alexa.config;
 
 public class ProjectProperties {
 
+    private String version;
+
     //Reddit Credentials
     private String redditUsername;
     private String redditPassword;
@@ -117,4 +119,8 @@ public class ProjectProperties {
     public void setAlexaConnectionError(String alexaConnectionError){
         this.alexaConnectionError = alexaConnectionError;
     }
+
+    public String getVersion(){ return version; }
+
+    public void setVersion(String version) { this.version = version; }
 }

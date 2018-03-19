@@ -33,12 +33,12 @@ public class RedditService {
     private final int PAGE_LIMIT = properties.getRedditPageLimit();
 
     public RedditService(){
-        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "1.1.0", "Crum_Bum");
+        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", properties.getVersion(), "AlexaForReddit");
 
         NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
         UUID uuid = UUID.randomUUID();
 
-        reddit = OAuthHelper.automatic(adapter, Credentials.userlessApp(properties.getRedditClientId(), uuid));
+        reddit = OAuthHelper.automatic(adapter, Credentials.userless(properties.getRedditClientId(), properties.getRedditClientSecret(), uuid));
     }
 
     public DefaultPaginator<Submission> getFrontPage(){

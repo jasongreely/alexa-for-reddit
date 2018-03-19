@@ -20,9 +20,9 @@ public class AppConfig {
     ProjectProperties projectProperties(){
         ProjectProperties bean = new ProjectProperties();
 
+        bean.setVersion(env.getProperty("version"));
+
         //Reddit Credentials
-        bean.setRedditUsername(env.getProperty("reddit.username"));
-        bean.setRedditPassword(env.getProperty("reddit.password"));
         bean.setRedditClientId(env.getProperty("reddit.client_id"));
         bean.setRedditClientSecret(env.getProperty("reddit.client_secret"));
 

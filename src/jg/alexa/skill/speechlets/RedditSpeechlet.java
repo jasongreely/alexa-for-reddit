@@ -123,6 +123,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         speechletHelper.dispatchProgressiveResponse(request.getRequestId(), "Hold please", systemState, apiEndpoint);
 
         StringBuilder speechBuilder = new StringBuilder();
+        boolean speakSubreddit = true;
         DefaultPaginator<Submission> paginator;
 
         if (StringUtils.equalsIgnoreCase(SUBREDDIT_PAGE_INTENT, intentName)) {
@@ -130,6 +131,7 @@ public class RedditSpeechlet implements SpeechletV2 {
 
             if(StringUtils.isNotBlank(subreddit)) {
                 paginator = redditService.getSubredditPage(subreddit);
+                speakSubreddit = false;
             } else {
                 speechBuilder.append(properties.getAlexaConnectionError());
                 return SpeechletResponse.newTellResponse(speechletHelper.getOutputSpeech(speechBuilder.toString()));
@@ -138,7 +140,7 @@ public class RedditSpeechlet implements SpeechletV2 {
             paginator = redditService.getFrontPage();
         }
 
-        speechBuilder.append(speechletHelper.getSubmissionSpeech(paginator, properties.getRedditPageCeiling()));
+        speechBuilder.append(speechletHelper.getSubmissionSpeech(paginator, properties.getRedditPageCeiling(), speakSubreddit));
         SsmlOutputSpeech outputSpeech = speechletHelper.getOutputSpeech(speechBuilder.toString());
 
         return SpeechletResponse.newTellResponse(outputSpeech);
