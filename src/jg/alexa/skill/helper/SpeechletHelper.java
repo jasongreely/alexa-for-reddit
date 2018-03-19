@@ -1,6 +1,8 @@
 package jg.alexa.skill.helper;
 
 import com.amazon.speech.json.SpeechletRequestEnvelope;
+import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.Context;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.speechlet.interfaces.system.SystemInterface;
@@ -13,6 +15,7 @@ import com.amazon.speech.ui.OutputSpeech;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SsmlOutputSpeech;
+import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +23,9 @@ import org.slf4j.LoggerFactory;
  * Created by jgreely on 3/17/18.
  */
 public class SpeechletHelper {
+
+    private static final String PAGE_SLOT = "page";
+
     private static final Logger log = LoggerFactory.getLogger(SpeechletHelper.class);
 
     private DirectiveService directiveService;
@@ -84,5 +90,18 @@ public class SpeechletHelper {
      */
     public SystemState getSystemState(Context context) {
         return context.getState(SystemInterface.class, SystemState.class);
+    }
+
+    public String getSubredditSlot(Intent intent){
+        Slot pageSlot = intent.getSlot(PAGE_SLOT);
+
+        String subreddit = "";
+
+        if(pageSlot != null && StringUtils.isNotBlank(pageSlot.getValue())){
+            subreddit = pageSlot.getValue();
+            log.info("Retrieved value from page slot: {}", subreddit);
+        }
+
+        return subreddit;
     }
 }

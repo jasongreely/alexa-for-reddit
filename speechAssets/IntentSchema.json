@@ -4,6 +4,15 @@
       "intent": "GetFrontPageIntent"
     },
     {
+      "intent": "GetSubredditPageIntent",
+      "slots":[
+        {
+          "name": "page",
+          "type": "AMAZON.SearchQuery"
+        }
+      ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     },
     {

@@ -82,7 +82,9 @@ public class RedditSpeechlet implements SpeechletV2 {
         if (StringUtils.equalsIgnoreCase(FRONT_PAGE_INTENT, intentName)) {
             //return SpeechletResponse for front page posts
             return handleFrontPageRequest(requestEnvelope);
-        } else if (StringUtils.equalsIgnoreCase(HELP_INTENT, intentName)) {
+        } else if (StringUtils.equalsIgnoreCase(SUBREDDIT_PAGE_INTENT, intentName)) {
+            return handleSubredditPageRequest(requestEnvelope);
+        }else if (StringUtils.equalsIgnoreCase(HELP_INTENT, intentName)) {
             // Create the plain text output.
             String speechOutput =
                     "With Alexa for Reddit, you can either get the front page, "
@@ -121,13 +123,13 @@ public class RedditSpeechlet implements SpeechletV2 {
         SystemState systemState = speechletHelper.getSystemState(requestEnvelope.getContext());
         String apiEndpoint = systemState.getApiEndpoint();
 
-        String speechPrefix = "<p>Here are the top hot posts from the front page-</p>";
-
         // Dispatch a progressive response to engage the user while fetching events
         speechletHelper.dispatchProgressiveResponse(request.getRequestId(), "Searching", systemState, apiEndpoint);
         DefaultPaginator<Submission> frontPaginator = redditService.getFrontPage();
 
         StringBuilder speechBuilder = new StringBuilder();
+        String speechPrefix = "<p>Here are the top hot posts from the front page-</p>";
+
         if(frontPaginator != null){
             speechBuilder.append(speechPrefix);
 
@@ -148,6 +150,46 @@ public class RedditSpeechlet implements SpeechletV2 {
         outputSpeech.setSsml("<speak>" + speechBuilder.toString() + "</speak>");
 
         return SpeechletResponse.newTellResponse(outputSpeech);
+    }
+
+    private SpeechletResponse handleSubredditPageRequest(SpeechletRequestEnvelope<IntentRequest> requestEnvelope){
+        IntentRequest request = requestEnvelope.getRequest();
+        SystemState systemState = speechletHelper.getSystemState(requestEnvelope.getContext());
+        String apiEndpoint = systemState.getApiEndpoint();
+
+        String subreddit = speechletHelper.getSubredditSlot(request.getIntent());
+
+        StringBuilder speechBuilder = new StringBuilder();
+        if(StringUtils.isNotBlank(subreddit)) {
+            speechletHelper.dispatchProgressiveResponse(request.getRequestId(), "Searching", systemState, apiEndpoint);
+            DefaultPaginator<Submission> subPaginator = redditService.getSubredditPage(subreddit);
+
+            String speechPrefix = "<p>Here are the top hot posts from " + subreddit;
+
+            if(subPaginator != null){
+                for(int x = 0; x < properties.getRedditPageCeiling(); x++){
+                    Listing<Submission> submissions = subPaginator.next();
+                    for(Submission submission : submissions){
+                        speechBuilder.append("<p>");
+                        speechBuilder.append("From " + submission.getSubreddit() + ", ");
+                        speechBuilder.append(submission.getTitle() + ", " + submission.getScore() + " points.");
+                        speechBuilder.append("</p>");
+                    }
+                }
+            }
+            else {
+                speechBuilder.append(properties.getAlexaConnectionError());
+            }
+
+
+
+        } else {
+            speechBuilder.append(properties.getAlexaConnectionError());
+        }
+        SsmlOutputSpeech outputSpeech = new SsmlOutputSpeech();
+        outputSpeech.setSsml("<speak>" + speechBuilder.toString() + "</speak>");
+        return SpeechletResponse.newTellResponse(outputSpeech);
+
     }
 
     private SpeechletResponse getWelcomeResponse() {

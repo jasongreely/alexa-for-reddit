@@ -11,22 +11,65 @@
       },
       {
         "name": "AMAZON.StopIntent",
-        "samples": [
-          "no",
-          "nope",
-          "no thanks",
-          "no thank you"
-        ]
+        "samples": []
       },
       {
         "name": "GetFrontPageIntent",
         "samples": [
-          "get me the front page",
           "give me the front page",
-          "front page"
+          "get me the front page"
+        ],
+        "slots": []
+      },
+      {
+        "name": "GetSubredditPageIntent",
+        "samples": [
+          "get me posts from {page}",
+          "give me posts from {page}"
+        ],
+        "slots": [
+          {
+            "name": "page",
+            "type": "AMAZON.SearchQuery",
+            "samples": [
+              "{page}",
+              "I want {page}"
+            ]
+          }
         ]
       }
     ],
     "invocationName": "reddit"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-GetSubredditPageIntent.IntentSlot-page",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "Which Subreddit would you like?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "GetSubredditPageIntent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "page",
+            "type": "AMAZON.SearchQuery",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-GetSubredditPageIntent.IntentSlot-page"
+            }
+          }
+        ]
+      }
+    ]
   }
 }
