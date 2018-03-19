@@ -36,26 +36,14 @@ public class SpeechletHelper {
 
     public SpeechletHelper(DirectiveService directiveService){ this.directiveService = directiveService; }
 
-    public SpeechletResponse newAskResponse(String stringOutput, boolean isOutputSsml,
-                                             String repromptText, boolean isRepromptSsml) {
-        OutputSpeech outputSpeech, repromptOutputSpeech;
-        if (isOutputSsml) {
-            outputSpeech = new SsmlOutputSpeech();
-            ((SsmlOutputSpeech) outputSpeech).setSsml(stringOutput);
-        } else {
-            outputSpeech = new PlainTextOutputSpeech();
-            ((PlainTextOutputSpeech) outputSpeech).setText(stringOutput);
-        }
+    public SpeechletResponse newAskResponse(String stringOutput, String repromptText) {
 
-        if (isRepromptSsml) {
-            repromptOutputSpeech = new SsmlOutputSpeech();
-            ((SsmlOutputSpeech) repromptOutputSpeech).setSsml(repromptText);
-        } else {
-            repromptOutputSpeech = new PlainTextOutputSpeech();
-            ((PlainTextOutputSpeech) repromptOutputSpeech).setText(repromptText);
-        }
+        SsmlOutputSpeech outputSpeech = getOutputSpeech(stringOutput);
+        SsmlOutputSpeech repromptSpeech = getOutputSpeech(repromptText);
+
         Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(repromptOutputSpeech);
+        reprompt.setOutputSpeech(repromptSpeech);
+
         return SpeechletResponse.newAskResponse(outputSpeech, reprompt);
     }
 
@@ -147,5 +135,18 @@ public class SpeechletHelper {
         } else {
             return points;
         }
+    }
+
+    public SsmlOutputSpeech getOutputSpeech(String speechContent){
+        StringBuilder outputBuilder = new StringBuilder();
+
+        outputBuilder.append("<speak>");
+        outputBuilder.append(speechContent);
+        outputBuilder.append("</speak>");
+
+        SsmlOutputSpeech outputSpeech = new SsmlOutputSpeech();
+        outputSpeech.setSsml(outputBuilder.toString());
+
+        return outputSpeech;
     }
 }
