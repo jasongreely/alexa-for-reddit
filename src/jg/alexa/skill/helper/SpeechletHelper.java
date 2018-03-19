@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 public class SpeechletHelper {
 
     private static final String PAGE_SLOT = "page";
+    private static final String COUNT_SLOT = "count";
 
     private static final Logger log = LoggerFactory.getLogger(SpeechletHelper.class);
 
@@ -106,6 +107,16 @@ public class SpeechletHelper {
         }
 
         return subreddit;
+    }
+
+    public int getPostCountSlot(Intent intent){
+        Slot countSlot = intent.getSlot(COUNT_SLOT);
+
+        if(countSlot != null){
+            return Integer.valueOf(countSlot.getValue());
+        } else {
+            return 0;
+        }
     }
 
     public String getSubmissionSpeech(DefaultPaginator<Submission> paginator, int pageCeiling){
