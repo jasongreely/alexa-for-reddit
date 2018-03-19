@@ -9,8 +9,6 @@ public class ProjectProperties {
     private String version;
 
     //Reddit Credentials
-    private String redditUsername;
-    private String redditPassword;
     private String redditClientId;
     private String redditClientSecret;
 
@@ -29,22 +27,6 @@ public class ProjectProperties {
     private String alexaConnectionError;
 
     //Reddit Credentials
-    public String getRedditUsername() {
-        return redditUsername;
-    }
-
-    public void setRedditUsername(String redditUsername) {
-        this.redditUsername = redditUsername;
-    }
-
-    public String getRedditPassword() {
-        return redditPassword;
-    }
-
-    public void setRedditPassword(String redditPassword) {
-        this.redditPassword = redditPassword;
-    }
-
     public String getRedditClientId() {
         return redditClientId;
     }
