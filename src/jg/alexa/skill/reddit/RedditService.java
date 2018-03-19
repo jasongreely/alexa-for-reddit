@@ -18,6 +18,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * Created by jgreely on 3/16/18.
@@ -32,14 +33,12 @@ public class RedditService {
     private final int PAGE_LIMIT = properties.getRedditPageLimit();
 
     public RedditService(){
-        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "0.0.1", "Crum_Bum");
-
-        Credentials credentials = Credentials.script(properties.getRedditUsername(), properties.getRedditPassword(),
-                properties.getRedditClientId(), properties.getRedditClientSecret());
+        UserAgent userAgent = new UserAgent("alexa", "jg.alexa", "1.1.0", "Crum_Bum");
 
         NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
+        UUID uuid = UUID.randomUUID();
 
-        reddit = OAuthHelper.automatic(adapter, credentials);
+        reddit = OAuthHelper.automatic(adapter, Credentials.userlessApp(properties.getRedditClientId(), uuid));
     }
 
     public DefaultPaginator<Submission> getFrontPage(){
