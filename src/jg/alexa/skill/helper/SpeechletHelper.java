@@ -127,15 +127,12 @@ public class SpeechletHelper {
     }
 
     public int getRoundedScore(int points){
-        if (points > 999 && points < 10000){
+        if (points > 999 && points < 100000){
             int offset = (points >= 0) ? 50 : -50;
             return (points + offset) / 100 * 100;
-        } else if (points > 9999 && points < 100000){
-            int offset = (points >= 0) ? 500 : -500;
-            return (points + offset) / 1000 * 1000;
         } else if (points > 99999 && points < 1000000){
-            int offset = (points > 0) ? 5000 : -5000;
-            return (points + offset) / 10000 * 10000;
+            int offset = (points > 0) ? 500 : -500;
+            return (points + offset) / 1000 * 1000;
         } else {
             return points;
         }
