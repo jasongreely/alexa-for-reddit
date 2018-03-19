@@ -133,15 +133,7 @@ public class RedditSpeechlet implements SpeechletV2 {
         if(frontPaginator != null){
             speechBuilder.append(speechPrefix);
 
-            for(int x = 0; x < properties.getRedditPageCeiling(); x++){
-                Listing<Submission> submissions = frontPaginator.next();
-                for(Submission submission : submissions){
-                    speechBuilder.append("<p>");
-                    speechBuilder.append("From " + submission.getSubreddit() + ", ");
-                    speechBuilder.append(submission.getTitle() + ", " + submission.getScore() + " points.");
-                    speechBuilder.append("</p>");
-                }
-            }
+            speechBuilder.append(speechletHelper.getSubmissionSpeech(frontPaginator, properties.getRedditPageCeiling()));
         } else {
             speechBuilder.append(properties.getAlexaConnectionError());
         }
@@ -167,29 +159,20 @@ public class RedditSpeechlet implements SpeechletV2 {
             String speechPrefix = "<p>Here are the top hot posts from " + subreddit;
 
             if(subPaginator != null){
-                for(int x = 0; x < properties.getRedditPageCeiling(); x++){
-                    Listing<Submission> submissions = subPaginator.next();
-                    for(Submission submission : submissions){
-                        speechBuilder.append("<p>");
-                        speechBuilder.append("From " + submission.getSubreddit() + ", ");
-                        speechBuilder.append(submission.getTitle() + ", " + submission.getScore() + " points.");
-                        speechBuilder.append("</p>");
-                    }
-                }
+                speechBuilder.append(speechPrefix);
+
+                speechBuilder.append(speechletHelper.getSubmissionSpeech(subPaginator, properties.getRedditPageCeiling()));
             }
             else {
                 speechBuilder.append(properties.getAlexaConnectionError());
             }
-
-
-
         } else {
             speechBuilder.append(properties.getAlexaConnectionError());
         }
+
         SsmlOutputSpeech outputSpeech = new SsmlOutputSpeech();
         outputSpeech.setSsml("<speak>" + speechBuilder.toString() + "</speak>");
         return SpeechletResponse.newTellResponse(outputSpeech);
-
     }
 
     private SpeechletResponse getWelcomeResponse() {

@@ -15,6 +15,9 @@ import com.amazon.speech.ui.OutputSpeech;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SsmlOutputSpeech;
+import net.dean.jraw.models.Listing;
+import net.dean.jraw.models.Submission;
+import net.dean.jraw.pagination.DefaultPaginator;
 import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,5 +106,38 @@ public class SpeechletHelper {
         }
 
         return subreddit;
+    }
+
+    public String getSubmissionSpeech(DefaultPaginator<Submission> paginator, int pageCeiling){
+        StringBuilder builder = new StringBuilder();
+
+        for(int x = 0; x < pageCeiling; x++){
+            Listing<Submission> submissions = paginator.next();
+            for(Submission submission : submissions){
+                int roundedScore = getRoundedScore(submission.getScore());
+
+                builder.append("<p>");
+                builder.append("From " + submission.getSubreddit() + ", ");
+                builder.append(submission.getTitle() + ", " + roundedScore + " points.");
+                builder.append("</p>");
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public int getRoundedScore(int points){
+        if (points > 999 && points < 10000){
+            int offset = (points >= 0) ? 50 : -50;
+            return (points + offset) / 100 * 100;
+        } else if (points > 9999 && points < 100000){
+            int offset = (points >= 0) ? 500 : -500;
+            return (points + offset) / 1000 * 1000;
+        } else if (points > 99999 && points < 1000000){
+            int offset = (points > 0) ? 5000 : -5000;
+            return (points + offset) / 10000 * 10000;
+        } else {
+            return points;
+        }
     }
 }
